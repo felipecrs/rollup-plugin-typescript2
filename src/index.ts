@@ -10,11 +10,11 @@ import { IOptions } from "./ioptions";
 import { Partial } from "./partial";
 import { parseTsConfig } from "./parse-tsconfig";
 import { printDiagnostics } from "./print-diagnostics";
-import { TSLIB, TSLIB_VIRTUAL, tslibSource, tslibVersion } from "./tslib";
+import { TSLIB, TSLIB_VIRTUAL, tslibSource } from "./tslib";
 import { blue, red, yellow, green } from "colors/safe";
 import { relative, dirname, normalize as pathNormalize, resolve as pathResolve } from "path";
 import { normalize } from "./normalize";
-import { satisfies } from "semver";
+//import { satisfies } from "semver";
 import findCacheDir from "find-cache-dir";
 
 import { PluginImpl, PluginContext, InputOptions, OutputOptions, TransformResult, SourceMap, Plugin } from "rollup";
@@ -92,12 +92,11 @@ const typescript: PluginImpl<RPT2Options> = (options) =>
 				parsedConfig.fileNames.forEach((fileName) => { allImportedFiles.add(fileName); });
 
 				context.info(`typescript version: ${tsModule.version}`);
-				context.info(`tslib version: ${tslibVersion}`);
 				if (this.meta)
 					context.info(`rollup version: ${this.meta.rollupVersion}`);
 
-				if (!satisfies(tsModule.version, "$TS_VERSION_RANGE", { includePrerelease : true } as any))
-					throw new Error(`Installed typescript version '${tsModule.version}' is outside of supported range '$TS_VERSION_RANGE'`);
+				// if (!satisfies(tsModule.version, "$TS_VERSION_RANGE", { includePrerelease : true } as any))
+				// 	throw new Error(`Installed typescript version '${tsModule.version}' is outside of supported range '$TS_VERSION_RANGE'`);
 
 				context.info(`rollup-plugin-typescript2 version: $RPT2_VERSION`);
 				context.debug(() => `plugin options:\n${JSON.stringify(pluginOptions, (key, value) => key === "typescript" ? `version ${(value as typeof tsModule).version}` : value, 4)}`);
